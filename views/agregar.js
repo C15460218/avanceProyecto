@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Button, SafeAreaView, Text, TextInput, View } from 'react-native'
 import SQLite from 'react-native-sqlite-storage'
 import style from '../assets/style'
+import CustomButton from '../controls/custombutton'
 
 const db = SQLite.openDatabase({name:'mydata'})
 
@@ -40,7 +41,7 @@ const AgregarScreen = function({ navigation }) {
                 <TextInput style={style.textInput} value={nombre} onChangeText={t => setNombre(t)} />
                 <Text>Teléfono</Text>
                 <TextInput style={style.textInput} value={telefono} onChangeText={t => setTelefono(t)} />
-                <Button title="Agregar" onPress={btnAgregarOnPress} />
+                <CustomButton title="Agregar" onPress={btnAgregarOnPress} />
             </View>
         </SafeAreaView>
     )

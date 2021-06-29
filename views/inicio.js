@@ -4,6 +4,8 @@ import { Button, FlatList, SafeAreaView, TouchableOpacity, Text } from 'react-na
 import SQLite from 'react-native-sqlite-storage'
 import style from '../assets/style'
 
+import CustomButton from '../controls/custombutton'
+
 const db = SQLite.openDatabase({name:'mydata'});
 
 
@@ -59,7 +61,7 @@ const InicioScreen = function({ navigation }) {
 
     return (
         <SafeAreaView>
-            <Button title="Agregar" onPress={()=>navigation.navigate('agregarScreen')} />
+            <CustomButton style={style.button} title="Agregar" onPress={()=>navigation.navigate('agregarScreen')} />
             <FlatList
                 data={contactos}
                 renderItem={contactoItem}

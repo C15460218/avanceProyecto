@@ -10,6 +10,16 @@ const style = StyleSheet.create({
     itemContactoDetails: {
         fontSize: 14
     },
+    button: {
+        fontSize: 48,
+        borderRadius: 32,
+        color: 'white',
+        backgroundColor: '#3C3',
+        padding: 12,
+        textAlign:'center',
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
+    },
     form: {
         borderWidth: 1,
         borderRadius: 8,
