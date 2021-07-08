@@ -20,8 +20,8 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="inicioScreen" component={InicioScreen} />
-        <Stack.Screen name="agregarScreen" component={AgregarScreen} />
+        <Stack.Screen name="inicioScreen" component={InicioScreen} options={{title: 'Suscripciones'}}/>
+        <Stack.Screen name="agregarScreen" component={AgregarScreen} options={{title: 'Agregar Suscripcion'}}/>
         <Stack.Screen name="itemScreen" component={ItemScreen} />
         <Stack.Screen name="modificarScreen" component={ModificarScreen} />
       </Stack.Navigator>

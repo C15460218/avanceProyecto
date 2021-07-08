@@ -9,17 +9,17 @@ import style from '../assets/style'
 const db = SQLite.openDatabase({name:'mydata'}, ()=>console.log('CONNECTED ITEM'))
 
 const ItemScreen = function({ route, navigation }) {
-    const id_contacto = route.params.id_contacto;
+    const id_suscripcion = route.params.id_suscripcion;
     const [nombre, setNombre] = useState('')
-    const [telefono, setTelefono] = useState('')
+    const [monto, setMonto] = useState('')
 
-    const setStates = function(nombre, telefono) {
+    const setStates = function(nombre, monto) {
         setNombre(nombre)
-        setTelefono(telefono)
+        setMonto(monto)
     }
 
     function onModificarPress() {
-        navigation.navigate('modificarScreen', {id_contacto})
+        navigation.navigate('modificarScreen', {id_suscripcion})
     }
 
     function onEliminarPress() {
@@ -31,8 +31,8 @@ const ItemScreen = function({ route, navigation }) {
                     onPress: (v) => {
                         db.transaction(tx => {
                             tx.executeSql(
-                                'DELETE FROM contactos WHERE id_contacto = ?',
-                                [id_contacto],
+                                'DELETE FROM suscripciones WHERE id_suscripcion = ?',
+                                [id_suscripcion],
                                 (tx, res) => {
                                     if (res.rowsAffected === 0) {
                                         Alert.alert('Fallo al eliminar', 'No se eliminó el registro')
@@ -55,15 +55,15 @@ const ItemScreen = function({ route, navigation }) {
     useEffect(function(){
         navigation.addListener('focus', function() {
             db.transaction(function(tx) {
-                tx.executeSql("SELECT * FROM contactos WHERE id_contacto = ?",
-                [id_contacto],
+                tx.executeSql("SELECT * FROM suscripciones WHERE id_suscripcion = ?",
+                [id_suscripcion],
                 function(tx2, res) {
                     if (res.rows.length === 0) {
-                        alert("No se encontró el contacto");
+                        alert("No se encontró la suscripcion");
                         return;
                     }
                     let row = res.rows.item(0)
-                    setStates(row.nombre, row.telefono)
+                    setStates(row.nombre, row.monto)
                 },
                 error => console.log({error}))
             })
@@ -75,8 +75,8 @@ const ItemScreen = function({ route, navigation }) {
             <View style={style.dataBox}>
                 <Text style={style.dataLabel}>Nombre</Text>
                 <Text style={style.dataContent}>{nombre}</Text>
-                <Text style={style.dataLabel}>Teléfono</Text>
-                <Text style={style.dataContent}>{telefono}</Text>
+                <Text style={style.dataLabel}>Monto</Text>
+                <Text style={style.dataContent}>{monto}</Text>
             </View>
             <View>
                 <Button title="Modificar" onPress={onModificarPress} />

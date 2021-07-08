@@ -9,29 +9,29 @@ const db = SQLite.openDatabase({name:'mydata'})
 
 const ModificarScreen = function({ route, navigation})
 {
-    const id_contacto = route.params.id_contacto;
+    const id_suscripcion = route.params.id_suscripcion;
     const [nombre, setNombre] = useState('')
-    const [telefono, setTelefono] = useState('')
+    const [monto, setMonto] = useState('')
 
-    function setContacto(_nombre, _telefono) {
+    function setSuscripcion(_nombre, _monto) {
         setNombre(_nombre)
-        setTelefono(_telefono)
+        setMonto(_monto)
     }
 
     useEffect(function() {
         db.transaction((tx) => {
             tx.executeSql(
-                'SELECT * FROM contactos WHERE id_contacto = ?',
-                [id_contacto],
+                'SELECT * FROM suscripciones WHERE id_suscripcion = ?',
+                [id_suscripcion],
                 function(tx, result) {
                     if (result.rows.length == 0) {
-                        Alert.alert("No existe el contacto para modificar");
+                        Alert.alert("No existe la suscripcion para modificar");
                         navigation.goBack();
                         return;
                     }
 
                     let registro = result.rows.item(0)
-                    setContacto(registro.nombre, registro.telefono)
+                    setContacto(registro.nombre, registro.monto)
                 }
             )
         })
@@ -40,8 +40,8 @@ const ModificarScreen = function({ route, navigation})
     function onGuardarPress() {
         db.transaction(tx => {
             tx.executeSql(
-                'UPDATE contactos SET nombre = ?, telefono = ? WHERE id_contacto = ?',
-                [nombre, telefono, id_contacto],
+                'UPDATE suscripciones SET nombre = ?, monto = ? WHERE id_suscripcion = ?',
+                [nombre, monto, id_suscripcion],
                 (tx, result) => {
                     if (result.rowsAffected.length === 0) {
                         Alert.alert('No se actualizaron los datos. Intente de nuevo')
@@ -61,8 +61,8 @@ const ModificarScreen = function({ route, navigation})
             <View style={style.form}>
                 <Text>Nombre</Text>
                 <TextInput style={style.textInput} value={nombre} onChangeText={setNombre} />
-                <Text>Teléfono</Text>
-                <TextInput style={style.textInput} value={telefono} onChangeText={setTelefono} />
+                <Text>Monto</Text>
+                <TextInput style={style.textInput} value={monto} onChangeText={setMonto} />
                 <Button title="Guardar" onPress={onGuardarPress} />
             </View>
         </SafeAreaView>
